@@ -1,13 +1,21 @@
-import paho.mqtt.client as mqtt
-
 import RPi.GPIO as GPIO
 from time import sleep
 import sys
 import Adafruit_DHT
-  
+from connection import mqtt_connect
+
+
+def on_message(client, userdata, msg):
+   print("Topic: "+msg.topic+" | Message: "+str(msg.payload.decode()))
+   if msg.topic == "temp/get":
+       temp()
+      
 client = mqtt_connect()
 
+client.on_message = on_message
 client.loop_start()
+
+client.subscribe("temp/get")
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.OUT)

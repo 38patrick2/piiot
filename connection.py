@@ -6,10 +6,8 @@ def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
 
 
-def on_subscribe(client, userdata, mid, c  granted_qos
-
-):
-print("Subscribed to topic")
+def on_subscribe(client, userdata, mid, granted_qos):
+    print("Subscribed to topic")
 
 
 def on_message(client, userdata, msg):
