@@ -5,6 +5,9 @@ from time import sleep
 import sys
 import Adafruit_DHT
   
+client = mqtt_connect()
+
+client.loop_start()
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.OUT)
@@ -29,7 +32,7 @@ GPIO.setup(g,GPIO.OUT)
 def temp():
     humidity, temperature = Adafruit_DHT.read_retry(11,4)
     print ('Temp: {0:0.1f}C '.format(temperature))
-
+    client.publish("temp/result", temperature)
 def off():
     GPIO.output(a,0)
     GPIO.output(b,0)   
@@ -168,3 +171,5 @@ write0()
 off()
 motor(5)
 GPIO.cleanup()
+
+client.loop_stop()
